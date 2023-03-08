@@ -1,0 +1,51 @@
+#include <SoftwareSerial.h>
+int trigger=7; 
+int echo=6;
+long dauer=0; 
+long entfernung=0;
+//Motor:
+int motorPin1=2;
+int motorPin2=3;
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+  //Motor:
+  pinMode(motorPin1, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
+}
+
+void motorStop(){
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, LOW);
+  delay(500);
+}
+
+void loop(){
+  digitalWrite(trigger, LOW); 
+  delay(5);
+  digitalWrite(trigger, HIGH); //Ultraschallwelle lossenden
+  delay(10);
+  digitalWrite(trigger, LOW);
+  dauer = pulseIn(echo, HIGH); //Mikrokontroller prüft die Zeit in Mikrosekunden, bis der Schall zum Ultraschallsensor zurückkehrt
+  entfernung = (dauer/2) * 0.03432; //Zeit durch zwei (nur eine Strecke berechnen und nicht vor und zurück), Multiplikation mit Schallgeschwindigkeit
+
+if  (entfernung < 10) //Wenn Entfernung unter 10cm liegt{
+  Serial.println("10cm erreicht, Gefahr erkannt, bitte wenden");
+  motorStop();
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, HIGH);
+  analogWrite(motorPin2,200);
+  delay(1000); }
+  
+else {
+  Serial.println("Sicherheitsabstand erreicht"); 
+  motorStop();
+  digitalWrite(motorPin1, HIGH);
+  digitalWrite(motorPin2, LOW);
+  analogWrite(motorPin1, 200);
+  delay(1000);
+}
+delay(1000);
+}

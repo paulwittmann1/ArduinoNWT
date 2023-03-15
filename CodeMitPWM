@@ -1,0 +1,58 @@
+// Gleichstrommotor 1
+int GSM1 = 10;
+int in1 = 9;
+int in2 = 8;
+// Gleichstrommotor 2
+int GSM2 = 5;
+int in3 = 7;
+int in4 = 6;
+
+void setup()
+{
+  pinMode(GSM1, OUTPUT);
+  pinMode(GSM2, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+}
+
+void motorStop(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  delay(500);
+}
+void loop(){
+  digitalWrite(trigger, LOW); 
+  delay(5);
+  digitalWrite(trigger, HIGH); //Ultraschallwelle lossenden
+  delay(10);
+  digitalWrite(trigger, LOW);
+  dauer = pulseIn(echo, HIGH); //Mikrokontroller prüft die Zeit in Mikrosekunden, bis der Schall zum Ultraschallsensor zurückkehrt
+  entfernung = (dauer/2) * 0.03432; //Zeit durch zwei (nur eine Strecke berechnen und nicht vor und zurück), Multiplikation mit Schallgeschwindigkeit
+
+if  (entfernung < 10) //Wenn Entfernung unter 10cm liegt 
+{
+  Serial.println("10cm erreicht, Gefahr erkannt, bitte wenden");
+  motorStop();
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  analogWrite(GSM1, 150); 
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(GSM2, 150);
+  
+else {
+  Serial.println("Sicherheitsabstand erreicht"); 
+  motorStop();
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  analogWrite(GSM1, 150);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(GSM2, 150);
+}
+delay(1000);
+}

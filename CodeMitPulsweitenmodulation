@@ -28,13 +28,13 @@ void setup()
   pinMode(in4, OUTPUT);
 }
 
-void motorStop(){
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, LOW);
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, LOW);
-  delay(500);
-}
+// void motorStop(){
+//  digitalWrite(in1, LOW);
+//  digitalWrite(in2, LOW);
+//  digitalWrite(in3, LOW);
+//  digitalWrite(in4, LOW);
+//  delay(500);
+// }
 void loop(){
   digitalWrite(trigger, LOW); 
   delay(5);
@@ -47,28 +47,30 @@ void loop(){
 if  (entfernung < 10) //Wenn Entfernung unter 10cm liegt 
 {
   Serial.println("10cm erreicht, Gefahr erkannt, bitte wenden");
-  motorStop();
+//  motorStop();
   delay(200);
   //Rückwärtsfahren
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
-  analogWrite(GSM1, 150); 
+  analogWrite(GSM1, 200); 
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  analogWrite(GSM2, 150);
+  analogWrite(GSM2, 200);
+  delay(200);
 }
   
 else {
   Serial.println("Sicherheitsabstand erreicht"); 
-  motorStop();
+//  motorStop();
   delay(200);
   //Vorwärtsfahren
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  analogWrite(GSM1, 150);
+  analogWrite(GSM1, 200);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  analogWrite(GSM2, 150);
+  analogWrite(GSM2, 200);
+  delay(200);
 }
 delay(1000);
 }

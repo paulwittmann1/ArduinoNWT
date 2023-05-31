@@ -34,9 +34,9 @@ void loop(){
   dauer = pulseIn(echo, HIGH);
   entfernung = (dauer/2) * 0.03432;
 
-if  (entfernung < 10) //Wenn Entfernung unter 10cm liegt 
+if  (entfernung < 20) //Wenn Entfernung unter 20cm liegt 
 {
-  Serial.println("10cm erreicht, Gefahr erkannt, bitte wenden");
+  Serial.println("20cm erreicht, Gefahr erkannt, bitte wenden");
 //  motorStop();
 //  delay(200);
   //Rückwärtsfahren

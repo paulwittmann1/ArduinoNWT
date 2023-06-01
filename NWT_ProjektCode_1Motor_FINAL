@@ -1,14 +1,14 @@
 #include <SoftwareSerial.h>
 //Ultraschallsensor
-int trigger=12; 
-int echo=11;
+int trigger=12; // Trigger des Ultraschallsensors wird dem Pin 12 zugeschrieben
+int echo=11; // Echo wird dem Pin 11 zugeschrieben
 long dauer=0; 
-long entfernung=0;
+long entfernung=0; 
 
 // Gleichstrommotor 1
-int GSM1 = 10;
-int in1 = 9;
-int in2 = 8;
+int GSM1 = 10; 
+int in1 = 9; //Input1 Pin 9 zugeschrieben
+int in2 = 8; //Input2 Pin 8 zugeschrieben
 
 void setup()
 {
@@ -32,7 +32,7 @@ void loop(){
   delay(10);
   digitalWrite(trigger, LOW);
   dauer = pulseIn(echo, HIGH);
-  entfernung = (dauer/2) * 0.03432;
+  entfernung = (dauer/2) * 0.03432; // Entfernung in cm wird berechnet
 
 if  (entfernung < 20) //Wenn Entfernung unter 20cm liegt 
 {
@@ -40,9 +40,9 @@ if  (entfernung < 20) //Wenn Entfernung unter 20cm liegt
 //  motorStop();
 //  delay(200);
   //Rückwärtsfahren
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, HIGH);
-  analogWrite(GSM1, 200); 
+  digitalWrite(in1, LOW); //Input 1 des Motors auf LOW
+  digitalWrite(in2, HIGH); //Input 2 des Motors auf HIGH
+  analogWrite(GSM1, 200); //Geschwindigkeitsvariable auf 200
   delay(200);
 }
   
@@ -51,9 +51,9 @@ else {
 //  motorStop();
 //  delay(200);
   //Vorwärtsfahren
-  digitalWrite(in1, HIGH);
-  digitalWrite(in2, LOW);
-  analogWrite(GSM1, 200);
+  digitalWrite(in1, HIGH); //Input 1 des Motors auf HIGH
+  digitalWrite(in2, LOW); //Input 2 des Motors auf LOW
+  analogWrite(GSM1, 200); //Geschwindigkeitsvariable auf 200
   delay(200);
 }
 delay(1000);
